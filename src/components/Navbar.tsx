@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import logoImg from "@/app/assets/rmscribe-logo-exact-transparent.png";
 import { FiMenu, FiX } from "react-icons/fi";
 
 const navLinks = [
@@ -42,57 +44,63 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-cream/95 backdrop-blur-md shadow-sm border-b border-gold/10"
+            ? "border-b border-navy/[0.08]"
             : "bg-transparent"
         }`}
+        style={scrolled ? { background: "rgba(247,246,242,0.95)", backdropFilter: "blur(12px)" } : undefined}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-12 flex items-center justify-between h-[84px]">
           {/* Logo */}
           <button
             onClick={() => handleNav("#home")}
-            className="flex flex-col leading-none group"
+            className="flex items-center"
           >
-            <span className="font-display text-xl font-bold tracking-tight text-ink group-hover:text-gold transition-colors duration-300">
-              RM<span className="text-gradient">Scribe</span>
-            </span>
-            <span className="font-mono text-[9px] tracking-[0.25em] text-gold-muted uppercase mt-0.5">
-              Consulting Ltd
-            </span>
+            <Image
+              src={logoImg}
+              alt="RMScribe Consulting Ltd"
+              height={44}
+              style={{
+                width: "auto",
+                filter: scrolled ? "none" : "brightness(0) invert(1)",
+                transition: "filter 0.5s ease",
+              }}
+              priority
+            />
           </button>
 
           {/* Desktop links */}
           <ul className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <button
-                  onClick={() => handleNav(link.href)}
-                  className={`font-sans text-sm tracking-wide transition-all duration-300 relative group ${
-                    activeSection === link.href.replace("#", "")
-                      ? "text-gold"
-                      : "text-ink/70 hover:text-ink"
-                  }`}
-                >
-                  {link.label}
-                  <span
-                    className={`absolute -bottom-1 left-0 h-px bg-gold transition-all duration-300 ${
-                      activeSection === link.href.replace("#", "")
-                        ? "w-full"
-                        : "w-0 group-hover:w-full"
-                    }`}
-                  />
-                </button>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const active = activeSection === link.href.replace("#", "");
+              return (
+                <li key={link.label}>
+                  <button
+                    onClick={() => handleNav(link.href)}
+                    className="font-ui text-sm font-medium transition-colors duration-250 relative"
+                    style={{
+                      color: active ? "var(--terracotta)" : "var(--ink-3)",
+                      borderBottom: active ? "1px solid var(--terracotta)" : "1px solid transparent",
+                      paddingBottom: "6px",
+                    }}
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
 
           {/* CTA */}
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); handleNav("#contact"); }}
-            className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-cream font-sans text-sm font-medium rounded-sm hover:bg-gold hover:text-white transition-all duration-300 group"
+            className="hidden md:inline-flex items-center gap-2.5 px-[22px] py-[13px] font-ui text-[13px] font-semibold tracking-[0.04em] rounded-[4px] text-white transition-all duration-250 group"
+            style={{ background: "var(--navy)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "var(--terracotta)")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "var(--navy)")}
           >
             Get in Touch
-            <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+            <span className="group-hover:translate-x-[3px] transition-transform duration-250">→</span>
           </a>
 
           {/* Mobile menu button */}
@@ -108,24 +116,25 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`fixed inset-0 z-40 bg-cream/98 backdrop-blur-lg flex flex-col justify-center items-center gap-8 transition-all duration-500 ${
+        className={`fixed inset-0 z-40 flex flex-col justify-center items-center gap-8 transition-all duration-500 ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        style={{ background: "rgba(247,246,242,0.98)", backdropFilter: "blur(16px)" }}
       >
         {navLinks.map((link, i) => (
           <button
             key={link.label}
             onClick={() => handleNav(link.href)}
-            className="font-display text-3xl font-semibold text-ink hover:text-gold transition-colors duration-300"
+            className="font-display text-3xl font-semibold text-ink hover:text-terracotta transition-colors duration-300"
             style={{ animationDelay: `${i * 80}ms` }}
           >
             {link.label}
           </button>
         ))}
-        <div className="gold-line w-24 mt-4" />
+        <div className="gradient-hairline w-24 mt-4" />
         <div className="flex flex-col items-center gap-1 mt-2">
-          <span className="font-sans text-xs text-ink/40 tracking-widest uppercase">Contact</span>
-          <a href="mailto:consultingrmscribe@gmail.com" className="font-sans text-sm text-gold hover:underline">
+          <span className="font-ui text-xs text-ink-4 tracking-[0.28em] uppercase">Contact</span>
+          <a href="mailto:consultingrmscribe@gmail.com" className="font-body text-sm text-terracotta hover:underline">
             consultingrmscribe@gmail.com
           </a>
         </div>

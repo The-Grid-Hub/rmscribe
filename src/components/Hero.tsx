@@ -9,9 +9,9 @@ export default function Hero() {
     const el = headlineRef.current;
     if (!el) return;
     el.style.opacity = "0";
-    el.style.transform = "translateY(40px)";
+    el.style.transform = "translateY(30px)";
     setTimeout(() => {
-      el.style.transition = "opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)";
+      el.style.transition = "opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1)";
       el.style.opacity = "1";
       el.style.transform = "translateY(0)";
     }, 200);
@@ -20,44 +20,51 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-ink"
+      className="relative flex flex-col justify-center overflow-hidden"
+      style={{
+        minHeight: "min(820px, 95vh)",
+        background: "var(--navy-deep)",
+        padding: "120px 0 80px",
+      }}
     >
-      {/* Background texture */}
+      {/* Horizontal rule texture — 1px wheat lines every 40px at 5% opacity */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 39px,
-            rgba(201,149,42,0.8) 39px,
-            rgba(201,149,42,0.8) 40px
-          )`,
+          opacity: 0.05,
+          backgroundImage:
+            "repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(233,189,114,0.8) 39px, rgba(233,189,114,0.8) 40px)",
         }}
       />
 
-      {/* Radial glow */}
+      {/* Radial glow — wheat */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full opacity-20"
+        className="absolute pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse, #C9952A 0%, transparent 70%)",
+          top: "30%", left: "50%",
+          width: 900, height: 600,
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(ellipse, rgba(233,189,114,0.22) 0%, transparent 70%)",
         }}
       />
 
-      {/* Decorative corner lines */}
-      <div className="absolute top-24 left-8 w-24 h-24 border-t border-l border-gold/20" />
-      <div className="absolute bottom-24 right-8 w-24 h-24 border-b border-r border-gold/20" />
+      {/* Corner brackets */}
+      <div className="absolute top-[110px] left-9 w-20 h-20 border-t border-l" style={{ borderColor: "rgba(233,189,114,0.25)" }} />
+      <div className="absolute bottom-[50px] right-9 w-20 h-20 border-b border-r" style={{ borderColor: "rgba(233,189,114,0.25)" }} />
 
       {/* Large decorative R */}
-      <div className="absolute right-[-2rem] top-1/2 -translate-y-1/2 font-display text-[30vw] font-black text-white/[0.025] leading-none pointer-events-none select-none">
+      <div
+        className="absolute right-[-3rem] top-1/2 -translate-y-1/2 font-display font-black leading-none pointer-events-none select-none"
+        style={{ fontSize: "30vw", color: "rgba(255,255,255,0.025)" }}
+      >
         R
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-32 flex flex-col justify-center">
-        {/* Tag line */}
-        <div className="flex items-center gap-4 mb-10 opacity-0 animate-[fadeIn_0.6s_ease_0.4s_forwards]">
-          <span className="inline-block w-10 h-px bg-gold" />
-          <span className="font-mono text-xs tracking-[0.3em] text-gold uppercase">
+      <div className="relative max-w-[1280px] mx-auto px-6 lg:px-12 w-full">
+        {/* Eyebrow */}
+        <div className="flex items-center gap-4 mb-9 opacity-0 animate-[fadeIn_0.6s_ease_0.4s_forwards]">
+          <span className="inline-block w-10 h-px" style={{ background: "var(--wheat)" }} />
+          <span className="font-ui text-[11px] tracking-[0.32em] uppercase" style={{ color: "var(--wheat)" }}>
             RMScribe Consulting Ltd
           </span>
         </div>
@@ -65,61 +72,80 @@ export default function Hero() {
         {/* Main headline */}
         <h1
           ref={headlineRef}
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-semibold text-cream leading-[1.05] max-w-5xl"
+          className="font-display font-semibold leading-[1.04] max-w-[1100px]"
+          style={{
+            fontSize: "clamp(2.75rem, 5.5vw + 1rem, 6.5rem)",
+            letterSpacing: "-0.01em",
+            color: "var(--bg-warm)",
+          }}
         >
           We Help You{" "}
-          <span className="italic text-gradient">Capture</span>
+          <em className="italic" style={{ color: "var(--terracotta)" }}>Capture</em>
           <br />
           the Heart of Your
           <br />
-          <span className="relative inline-block">
-            Meetings &amp; Events
-            <span
-              className="absolute -bottom-2 left-0 right-0 h-px opacity-40"
-              style={{
-                background: "linear-gradient(90deg, transparent, #C9952A, transparent)",
-              }}
-            />
-          </span>
+          Meetings &amp; Events
         </h1>
 
         {/* Subtext */}
         <p
-          className="mt-8 font-body text-cream/60 text-lg md:text-xl max-w-2xl leading-relaxed opacity-0 animate-[fadeUp_0.8s_ease_0.9s_forwards]"
+          className="mt-8 font-body text-lg leading-relaxed max-w-[620px] opacity-0 animate-[fadeUp_0.9s_ease_0.9s_forwards]"
+          style={{ color: "rgba(247,246,242,0.6)" }}
         >
-          A Nigerian documentation &amp; conference services firm specialising in rapporteurship,
+          A Nigerian documentation and conference services firm specialising in rapporteurship,
           facilitation, and knowledge management for international organisations and civil society.
         </p>
 
         {/* CTAs */}
-        <div className="mt-12 flex flex-wrap gap-4 opacity-0 animate-[fadeUp_0.8s_ease_1.1s_forwards]">
+        <div className="mt-12 flex flex-wrap gap-3.5 opacity-0 animate-[fadeUp_0.9s_ease_1.1s_forwards]">
           <a
             href="#services"
             onClick={(e) => { e.preventDefault(); document.querySelector("#services")?.scrollIntoView({ behavior: "smooth" }); }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gold text-ink font-sans font-semibold text-sm tracking-wide hover:bg-gold-light transition-all duration-300 group rounded-sm"
+            className="inline-flex items-center gap-2.5 px-[22px] py-[13px] font-ui font-semibold text-[13px] tracking-[0.04em] rounded-[4px] transition-all duration-250 group"
+            style={{ background: "var(--wheat)", color: "var(--navy-deep)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "var(--wheat-dark)")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "var(--wheat)")}
           >
             Our Services
-            <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+            <span className="group-hover:translate-x-[3px] transition-transform duration-250">→</span>
           </a>
           <a
             href="#work"
             onClick={(e) => { e.preventDefault(); document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" }); }}
-            className="inline-flex items-center gap-3 px-8 py-4 border border-cream/20 text-cream font-sans font-medium text-sm tracking-wide hover:border-gold hover:text-gold transition-all duration-300 rounded-sm"
+            className="inline-flex items-center gap-2.5 px-[22px] py-[13px] font-ui font-semibold text-[13px] tracking-[0.04em] rounded-[4px] transition-all duration-250"
+            style={{ color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.25)" }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--wheat)";
+              e.currentTarget.style.color = "var(--navy-deep)";
+              e.currentTarget.style.borderColor = "var(--wheat)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = "rgba(255,255,255,0.85)";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+            }}
           >
             View Our Work
           </a>
         </div>
 
         {/* Stats bar */}
-        <div className="mt-20 pt-10 border-t border-white/10 grid grid-cols-3 gap-8 max-w-xl opacity-0 animate-[fadeIn_0.8s_ease_1.4s_forwards]">
+        <div
+          className="mt-20 pt-10 grid grid-cols-3 gap-8 max-w-[640px] opacity-0 animate-[fadeIn_0.8s_ease_1.4s_forwards]"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}
+        >
           {[
             { number: "10+", label: "Years Experience" },
             { number: "200+", label: "Attendee Events" },
             { number: "3+", label: "Major Programmes" },
           ].map((stat) => (
-            <div key={stat.label} className="flex flex-col">
-              <span className="font-display text-3xl font-bold text-gold">{stat.number}</span>
-              <span className="font-sans text-xs text-cream/40 mt-1 tracking-wide">{stat.label}</span>
+            <div key={stat.label} className="flex flex-col gap-1.5">
+              <span className="font-display text-[36px] font-bold leading-none" style={{ color: "var(--wheat)" }}>
+                {stat.number}
+              </span>
+              <span className="font-ui text-[11px] tracking-[0.14em] uppercase" style={{ color: "rgba(247,246,242,0.45)" }}>
+                {stat.label}
+              </span>
             </div>
           ))}
         </div>
@@ -127,8 +153,13 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 animate-[fadeIn_0.8s_ease_1.8s_forwards]">
-        <span className="font-mono text-[10px] tracking-[0.2em] text-cream/30 uppercase">Scroll</span>
-        <div className="w-px h-12 bg-gradient-to-b from-gold/60 to-transparent animate-[float_2s_ease-in-out_infinite]" />
+        <span className="font-mono text-[10px] tracking-[0.2em] uppercase" style={{ color: "rgba(247,246,242,0.3)" }}>
+          Scroll
+        </span>
+        <div
+          className="w-px h-12 animate-[float_2s_ease-in-out_infinite]"
+          style={{ background: "linear-gradient(to bottom, rgba(233,189,114,0.6), transparent)" }}
+        />
       </div>
     </section>
   );

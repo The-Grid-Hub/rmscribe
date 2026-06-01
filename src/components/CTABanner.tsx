@@ -6,37 +6,41 @@ export default function CTABanner() {
   const ref = useReveal<HTMLDivElement>();
 
   return (
-    <section className="bg-parchment py-20 overflow-hidden">
-      <div ref={ref} className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="relative bg-sage rounded-sm p-10 md:p-14 overflow-hidden text-center">
-          {/* Background pattern */}
+    <section style={{ background: "var(--bg-warm)", padding: "80px 0" }}>
+      <div ref={ref} className="max-w-[1280px] mx-auto px-6 lg:px-12 section-reveal">
+        <div
+          className="relative rounded-[4px] overflow-hidden text-center"
+          style={{ background: "var(--navy)", padding: "56px 64px" }}
+        >
+          {/* Diagonal hatch */}
           <div
-            className="absolute inset-0 opacity-10"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              backgroundImage: `repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 20px,
-                rgba(201,149,42,0.5) 20px,
-                rgba(201,149,42,0.5) 21px
-              )`,
+              opacity: 0.07,
+              backgroundImage: "repeating-linear-gradient(-45deg, transparent 20px, #E9BD72 20px, #E9BD72 21px)",
             }}
           />
-          <div className="absolute top-4 left-4 w-12 h-12 border-t border-l border-gold/30" />
-          <div className="absolute bottom-4 right-4 w-12 h-12 border-b border-r border-gold/30" />
+          {/* Corner brackets */}
+          <div className="absolute top-3.5 left-3.5 w-6 h-6 border-t border-l" style={{ borderColor: "rgba(233,189,114,0.4)" }} />
+          <div className="absolute bottom-3.5 right-3.5 w-6 h-6 border-b border-r" style={{ borderColor: "rgba(233,189,114,0.4)" }} />
 
           <div className="relative">
-            <p className="font-mono text-[10px] tracking-[0.3em] text-gold uppercase mb-4">
+            <p className="font-ui text-[11px] font-semibold tracking-[0.32em] uppercase mb-[18px]" style={{ color: "var(--wheat)" }}>
               Ready to Work Together?
             </p>
-            <h2 className="font-display text-3xl md:text-4xl font-semibold text-cream leading-tight mb-4">
-              Your next event deserves
-              <br />
-              <span className="italic text-gold-light">documentation that lasts.</span>
+            <h2
+              className="font-display font-semibold leading-[1.15] mb-4"
+              style={{ fontSize: "clamp(1.75rem, 2vw + 1rem, 2.5rem)", color: "var(--bg-warm)" }}
+            >
+              Your next event deserves{" "}
+              <em className="italic" style={{ color: "var(--wheat)" }}>documentation that lasts.</em>
             </h2>
-            <p className="font-body text-cream/60 text-base max-w-xl mx-auto mb-8">
-              From a single workshop to a multi-day international retreat — we bring precision,
-              neutrality, and professionalism to every session.
+            <p
+              className="font-body text-base max-w-[540px] mx-auto mb-8 leading-relaxed"
+              style={{ color: "rgba(247,246,242,0.6)" }}
+            >
+              Reach out to discuss your conference, retreat, or scriptwriting project.
+              We respond within 24 hours.
             </p>
             <a
               href="#contact"
@@ -44,10 +48,13 @@ export default function CTABanner() {
                 e.preventDefault();
                 document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gold text-ink font-sans font-semibold text-sm tracking-wide hover:bg-gold-light transition-all duration-300 group rounded-sm"
+              className="inline-flex items-center gap-2.5 font-ui font-semibold text-[13px] tracking-[0.04em] rounded-[4px] transition-all duration-250 group"
+              style={{ background: "var(--wheat)", color: "var(--navy-deep)", padding: "13px 22px" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "var(--wheat-dark)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "var(--wheat)")}
             >
               Start the Conversation
-              <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+              <span className="group-hover:translate-x-[3px] transition-transform duration-250">→</span>
             </a>
           </div>
         </div>

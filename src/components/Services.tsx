@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import {
   FiFileText,
@@ -11,20 +12,20 @@ import {
 
 const services = [
   {
-    icon: <FiFileText size={28} />,
+    icon: <FiFileText size={22} />,
     number: "01",
     title: "Rapporteurship & Documentation",
     tagline: "Precision in Every Word",
     items: [
-      "Real-time session documentation and note-taking",
-      "Plenary, panel, and breakout group coverage",
-      "Structured session summaries and final conference reports",
+      "Real-time session documentation",
+      "Plenary, panel, and breakout coverage",
+      "Structured session summaries and final reports",
       "Donor-ready report writing and formatting",
     ],
-    accent: "#C9952A",
+    accent: "#C65D50",
   },
   {
-    icon: <FiMic size={28} />,
+    icon: <FiMic size={22} />,
     number: "02",
     title: "Facilitation & Moderation",
     tagline: "Guiding Meaningful Dialogue",
@@ -34,10 +35,10 @@ const services = [
       "Agenda structuring and session management",
       "Synthesis and recommendations capture",
     ],
-    accent: "#4A5E52",
+    accent: "#1E3F63",
   },
   {
-    icon: <FiEdit3 size={28} />,
+    icon: <FiEdit3 size={22} />,
     number: "03",
     title: "Scriptwriting & Content",
     tagline: "Stories That Resonate",
@@ -47,16 +48,16 @@ const services = [
       "Content editing, proofreading, and formatting",
       "Communication strategy support",
     ],
-    accent: "#A0522D",
+    accent: "#C99A4D",
   },
   {
-    icon: <FiList size={28} />,
+    icon: <FiList size={22} />,
     number: "04",
     title: "Additional Support Services",
     tagline: "End-to-End Knowledge Management",
     items: [
       "Audio/video transcription",
-      "Post-event knowledge management and report dissemination",
+      "Post-event knowledge management",
       "Stakeholder report packaging",
       "Programme learning documentation",
     ],
@@ -68,37 +69,37 @@ export default function Services() {
   const headerRef = useReveal<HTMLDivElement>();
 
   return (
-    <section id="services" className="relative bg-parchment py-28 overflow-hidden">
-      {/* Top border decoration */}
-      <div className="absolute top-0 left-0 right-0 h-px gold-line opacity-50" />
+    <section id="services" className="relative overflow-hidden" style={{ background: "var(--bg-warm)", padding: "112px 0" }}>
+      <div className="gradient-hairline" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12" style={{ paddingTop: 64 }}>
         {/* Header */}
-        <div ref={headerRef} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div ref={headerRef} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 section-reveal">
           <div>
-            <div className="flex items-center gap-4 mb-6">
-              <span className="w-10 h-px bg-gold" />
-              <span className="font-mono text-xs tracking-[0.25em] text-gold-muted uppercase">
+            <div className="eyebrow">
+              <span className="font-ui text-[11px] font-semibold tracking-[0.28em] uppercase" style={{ color: "var(--ink-4)" }}>
                 What We Do
               </span>
             </div>
-            <h2 className="font-display text-4xl md:text-5xl font-semibold text-ink leading-tight">
-              Services We <span className="italic text-gradient">Offer</span>
+            <h2
+              className="font-display font-semibold leading-[1.1]"
+              style={{ fontSize: "clamp(2rem, 2vw + 1rem, 3rem)", color: "var(--ink)" }}
+            >
+              Services We <em className="italic" style={{ color: "var(--terracotta)" }}>Offer</em>
             </h2>
           </div>
-          <p className="font-body text-ink/60 text-base max-w-sm leading-relaxed">
+          <p className="font-body text-[15px] leading-relaxed max-w-[340px]" style={{ color: "var(--ink-3)" }}>
             Comprehensive documentation and conference support tailored to your organisation&apos;s needs.
           </p>
         </div>
 
         {/* Services grid */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-[18px]">
           {services.map((service, i) => (
             <ServiceCard key={service.number} service={service} index={i} />
           ))}
         </div>
 
-        {/* Why choose us strip */}
         <WhyChooseUs />
       </div>
     </section>
@@ -107,46 +108,61 @@ export default function Services() {
 
 function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
   const ref = useReveal<HTMLDivElement>();
+  const [hov, setHov] = useState(false);
 
   return (
     <div
       ref={ref}
-      className="card-hover group relative bg-cream rounded-sm p-8 border border-gold/10 overflow-hidden"
-      style={{ transitionDelay: `${index * 80}ms` }}
+      className="relative rounded-[4px] overflow-hidden section-reveal"
+      style={{
+        background: "var(--bg)",
+        border: "1px solid rgba(30,63,99,0.08)",
+        padding: "32px 32px 28px",
+        transitionDelay: `${index * 80}ms`,
+        transform: hov ? "translateY(-4px)" : undefined,
+        boxShadow: hov
+          ? "0 20px 60px rgba(23,23,23,0.08)"
+          : "0 1px 2px rgba(23,23,23,0.04), 0 8px 24px rgba(23,23,23,0.06)",
+        transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease",
+      }}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
     >
-      {/* Accent corner */}
+      {/* Accent radial */}
       <div
-        className="absolute top-0 right-0 w-16 h-16 opacity-10 group-hover:opacity-20 transition-opacity duration-300"
-        style={{ background: `radial-gradient(circle at top right, ${service.accent}, transparent 70%)` }}
+        className="absolute top-0 right-0 w-[120px] h-[120px] pointer-events-none transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(circle at top right, ${service.accent}, transparent 70%)`,
+          opacity: hov ? 0.18 : 0.10,
+        }}
       />
 
-      {/* Number */}
       <div className="flex items-start justify-between mb-6">
         <div
-          className="w-12 h-12 flex items-center justify-center rounded-sm transition-all duration-300 group-hover:scale-110"
-          style={{ background: `${service.accent}15`, color: service.accent }}
+          className="w-12 h-12 flex items-center justify-center rounded-[4px] transition-transform duration-300"
+          style={{
+            background: `${service.accent}20`,
+            color: service.accent,
+            transform: hov ? "scale(1.08)" : "scale(1)",
+          }}
         >
           {service.icon}
         </div>
-        <span className="font-mono text-xs text-ink/20 font-bold">{service.number}</span>
+        <span className="font-mono text-[12px] font-bold" style={{ color: "var(--ink-5)" }}>{service.number}</span>
       </div>
 
-      <p className="font-mono text-[10px] tracking-[0.2em] text-gold-muted uppercase mb-1">
+      <p className="font-ui text-[10px] tracking-[0.22em] uppercase font-semibold mb-1.5" style={{ color: "var(--wheat-dark)" }}>
         {service.tagline}
       </p>
-      <h3 className="font-display text-xl font-semibold text-ink mb-5 leading-tight">
+      <h3 className="font-display text-[22px] font-semibold leading-[1.2] mb-[18px]" style={{ color: "var(--ink)" }}>
         {service.title}
       </h3>
 
-      <ul className="space-y-3">
+      <ul className="space-y-[9px]">
         {service.items.map((item) => (
-          <li key={item} className="flex items-start gap-3">
-            <FiCheckCircle
-              size={14}
-              className="mt-0.5 shrink-0 transition-colors duration-300"
-              style={{ color: service.accent }}
-            />
-            <span className="font-body text-sm text-ink/65 leading-relaxed">{item}</span>
+          <li key={item} className="flex items-start gap-2.5">
+            <FiCheckCircle size={14} className="mt-[4px] shrink-0" style={{ color: service.accent }} />
+            <span className="font-body text-[14px] leading-[1.55]" style={{ color: "var(--ink-3)" }}>{item}</span>
           </li>
         ))}
       </ul>
@@ -160,35 +176,41 @@ function WhyChooseUs() {
   const reasons = [
     "Proven experience with EU-SDGN (Feb 2025; Jan 2026)",
     "Trained rapporteurs for multi-stakeholder, multi-day events",
-    "Strong command of Nigerian & international conference protocols",
+    "Strong command of Nigerian & international protocols",
     "C2-level English across all team members",
     "Handle 200+ attendee events with structured coverage",
     "Strict confidentiality and time-sensitive delivery",
-    "In-house coordination between rapporteurs, facilitators, and moderators",
+    "In-house coordination between rapporteurs and facilitators",
   ];
 
   return (
-    <div ref={ref} className="mt-16 bg-ink rounded-sm p-10 overflow-hidden relative">
+    <div
+      ref={ref}
+      className="mt-16 rounded-[4px] relative overflow-hidden section-reveal"
+      style={{ background: "var(--navy-deep)", padding: "40px 44px" }}
+    >
       <div
-        className="absolute inset-0 opacity-5"
-        style={{ background: "radial-gradient(ellipse at 20% 50%, #C9952A, transparent 60%)" }}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          opacity: 0.5,
+          background: "radial-gradient(ellipse at 15% 50%, rgba(233,189,114,0.15), transparent 60%)",
+        }}
       />
       <div className="relative">
-        <div className="flex items-center gap-4 mb-8">
-          <span className="w-10 h-px bg-gold" />
-          <span className="font-mono text-xs tracking-[0.25em] text-gold uppercase">
+        <div className="flex items-center gap-3.5 mb-7">
+          <span className="inline-block w-10 h-px" style={{ background: "var(--wheat)" }} />
+          <span className="font-ui text-[11px] font-semibold tracking-[0.28em] uppercase" style={{ color: "var(--wheat)" }}>
             Why Choose RMScribe
           </span>
         </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {reasons.map((reason, i) => (
-            <div
-              key={i}
-              className="flex items-start gap-3 group"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0 mt-2" />
-              <span className="font-body text-sm text-cream/60 leading-relaxed group-hover:text-cream/90 transition-colors duration-300">
+            <div key={i} className="flex items-start gap-2.5">
+              <span
+                className="shrink-0 rounded-full mt-2"
+                style={{ width: 6, height: 6, background: "var(--wheat)", flex: "0 0 6px" }}
+              />
+              <span className="font-body text-[13.5px] leading-[1.55]" style={{ color: "rgba(247,246,242,0.65)" }}>
                 {reason}
               </span>
             </div>

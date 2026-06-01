@@ -2,17 +2,8 @@
 
 import { useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
-import {
-  FiMail,
-  FiPhone,
-  FiMapPin,
-  FiSend,
-} from "react-icons/fi";
-import {
-  FaLinkedinIn,
-  FaFacebookF,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FiMail, FiPhone, FiMapPin, FiSend } from "react-icons/fi";
+import { FaLinkedinIn, FaFacebookF, FaWhatsapp } from "react-icons/fa";
 
 const contactInfo = [
   {
@@ -29,38 +20,21 @@ const contactInfo = [
   },
   {
     icon: <FiMapPin size={18} />,
-    label: "Address",
+    label: "Office",
     value: "20 Rabiatu Aghedo Street, Ago Palace Way, Okota, Lagos",
-    href: "#",
+    href: undefined,
   },
 ];
 
 const socials = [
-  {
-    icon: <FaLinkedinIn size={16} />,
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/rmscribe-consulting-13031a381",
-    color: "#0A66C2",
-  },
-  {
-    icon: <FaFacebookF size={16} />,
-    label: "Facebook",
-    href: "https://www.facebook.com/rosepirationwrites",
-    color: "#1877F2",
-  },
-  {
-    icon: <FaWhatsapp size={16} />,
-    label: "WhatsApp",
-    href: "https://wa.me/2348062221464",
-    color: "#25D366",
-  },
+  { icon: <FaLinkedinIn size={16} />, label: "LinkedIn", href: "https://www.linkedin.com/in/rmscribe-consulting-13031a381", color: "#0A66C2" },
+  { icon: <FaFacebookF size={16} />, label: "Facebook", href: "https://www.facebook.com/rosepirationwrites", color: "#1877F2" },
+  { icon: <FaWhatsapp size={16} />, label: "WhatsApp", href: "https://wa.me/2348062221464", color: "#25D366" },
 ];
 
 export default function Contact() {
   const headerRef = useReveal<HTMLDivElement>();
-  const [formState, setFormState] = useState({
-    name: "", email: "", organisation: "", service: "", message: "",
-  });
+  const [formState, setFormState] = useState({ name: "", email: "", organisation: "", service: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -78,62 +52,74 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative bg-ink py-28 overflow-hidden">
-      {/* Background glow */}
+    <section id="contact" className="relative overflow-hidden" style={{ background: "var(--navy-deep)", padding: "112px 0" }}>
+      {/* Radial glow bottom-left */}
       <div
-        className="absolute bottom-0 left-1/4 w-[600px] h-[400px] rounded-full opacity-10 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse, #C9952A, transparent 70%)" }}
+        className="absolute bottom-0 left-0 pointer-events-none"
+        style={{ width: 600, height: 600, background: "radial-gradient(circle, rgba(233,189,114,0.10), transparent 60%)" }}
       />
-      <div className="absolute top-0 left-0 right-0 h-px opacity-30" style={{ background: "linear-gradient(90deg, transparent, #C9952A, transparent)" }} />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="relative max-w-[1280px] mx-auto px-6 lg:px-12">
         {/* Header */}
-        <div ref={headerRef} className="mb-16">
-          <div className="flex items-center gap-4 mb-6">
-            <span className="w-10 h-px bg-gold" />
-            <span className="font-mono text-xs tracking-[0.25em] text-gold uppercase">Get in Touch</span>
+        <div ref={headerRef} className="mb-14 section-reveal">
+          <div className="flex items-center gap-3.5 mb-[18px]">
+            <span className="inline-block w-10 h-px" style={{ background: "var(--wheat)" }} />
+            <span className="font-ui text-[11px] font-semibold tracking-[0.28em] uppercase" style={{ color: "var(--wheat)" }}>
+              Get in Touch
+            </span>
           </div>
-          <h2 className="font-display text-4xl md:text-5xl font-semibold text-cream leading-tight">
-            Let&apos;s Build Something
-            <br />
-            <span className="italic text-gradient">Remarkable Together</span>
+          <h2
+            className="font-display font-semibold leading-[1.1] max-w-[800px]"
+            style={{ fontSize: "clamp(2rem, 3vw + 1rem, 3.5rem)", color: "var(--bg-warm)" }}
+          >
+            Let&apos;s Build Something{" "}
+            <em className="italic" style={{ color: "var(--terracotta)" }}>Remarkable</em> Together
           </h2>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr,1.5fr] gap-12">
-          {/* Left: Contact Info */}
-          <div className="flex flex-col gap-8">
-            <p className="font-body text-cream/60 text-base leading-relaxed">
-              Whether you need comprehensive conference documentation, expert facilitation, or
-              compelling scriptwriting — we&apos;re ready to help you capture what matters most.
+        <div className="grid lg:grid-cols-[1fr,1.4fr] gap-16 items-start">
+          {/* Contact info */}
+          <div>
+            <p className="font-body text-base leading-[1.7] mb-8" style={{ color: "rgba(247,246,242,0.6)" }}>
+              Reach out about an upcoming conference, a documentation project, or just to introduce your
+              organisation. We typically respond within 24 hours.
             </p>
 
-            {/* Contact items */}
-            <div className="space-y-5">
-              {contactInfo.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="flex items-start gap-4 group"
-                >
-                  <div className="w-10 h-10 rounded-sm border border-gold/20 flex items-center justify-center text-gold group-hover:bg-gold group-hover:border-gold transition-all duration-300 shrink-0">
-                    {item.icon}
+            <div className="flex flex-col gap-[18px] mb-8">
+              {contactInfo.map((item) => {
+                const inner = (
+                  <>
+                    <span
+                      className="w-10 h-10 flex items-center justify-center rounded-[4px] shrink-0"
+                      style={{ border: "1px solid rgba(255,255,255,0.12)", color: "var(--wheat)" }}
+                    >
+                      {item.icon}
+                    </span>
+                    <span className="flex flex-col gap-0.5">
+                      <span className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "rgba(255,255,255,0.4)" }}>
+                        {item.label}
+                      </span>
+                      <span className="font-body text-[14.5px]" style={{ color: "rgba(247,246,242,0.85)" }}>
+                        {item.value}
+                      </span>
+                    </span>
+                  </>
+                );
+                return item.href ? (
+                  <a key={item.label} href={item.href} className="flex items-center gap-3.5 no-underline">
+                    {inner}
+                  </a>
+                ) : (
+                  <div key={item.label} className="flex items-center gap-3.5">
+                    {inner}
                   </div>
-                  <div>
-                    <p className="font-mono text-[10px] tracking-widest text-cream/30 uppercase mb-0.5">
-                      {item.label}
-                    </p>
-                    <p className="font-sans text-sm text-cream/70 group-hover:text-cream transition-colors duration-300">
-                      {item.value}
-                    </p>
-                  </div>
-                </a>
-              ))}
+                );
+              })}
             </div>
 
-            {/* Social links */}
-            <div>
-              <p className="font-mono text-[10px] tracking-[0.25em] text-gold/60 uppercase mb-4">
+            {/* Socials */}
+            <div className="mb-8">
+              <p className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase mb-4" style={{ color: "rgba(255,255,255,0.4)" }}>
                 Connect With Us
               </p>
               <div className="flex gap-3">
@@ -144,15 +130,17 @@ export default function Contact() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="w-10 h-10 rounded-sm border border-cream/10 flex items-center justify-center text-cream/50 hover:text-white hover:border-transparent transition-all duration-300"
-                    style={{ ["--hover-bg" as string]: s.color }}
+                    className="w-10 h-10 rounded-[4px] flex items-center justify-center transition-all duration-300"
+                    style={{ border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.5)" }}
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = s.color;
-                      (e.currentTarget as HTMLElement).style.borderColor = s.color;
+                      e.currentTarget.style.background = s.color;
+                      e.currentTarget.style.borderColor = s.color;
+                      e.currentTarget.style.color = "#fff";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "transparent";
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.1)";
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                      e.currentTarget.style.color = "rgba(255,255,255,0.5)";
                     }}
                   >
                     {s.icon}
@@ -161,103 +149,101 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Consultant card */}
-            <div className="border border-gold/20 rounded-sm p-5 bg-white/[0.03]">
-              <p className="font-mono text-[10px] tracking-widest text-gold/60 uppercase mb-3">Lead Consultant</p>
-              <p className="font-display text-lg font-semibold text-cream mb-1">Rosemary Alor</p>
-              <p className="font-sans text-xs text-cream/40">Rapporteur · Writer · Documentation Expert</p>
+            {/* Founder card */}
+            <div
+              className="rounded-[4px] p-5"
+              style={{ border: "1px solid rgba(233,189,114,0.18)", background: "rgba(255,255,255,0.03)" }}
+            >
+              <p className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase mb-1.5" style={{ color: "rgba(255,255,255,0.45)" }}>
+                Lead Consultant
+              </p>
+              <p className="font-display text-[22px] font-semibold" style={{ color: "var(--bg-warm)" }}>Rosemary Alor</p>
+              <p className="font-ui text-[12px] mt-1" style={{ color: "rgba(255,255,255,0.45)" }}>Founder · Lead Rapporteur</p>
             </div>
           </div>
 
-          {/* Right: Form */}
-          <div className="bg-cream/[0.04] border border-white/[0.08] rounded-sm p-8">
+          {/* Form */}
+          <div
+            className="rounded-[4px]"
+            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", padding: 36 }}
+          >
             {submitted ? (
-              <div className="flex flex-col items-center justify-center h-full gap-5 text-center py-12">
-                <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
-                  <FiSend size={24} className="text-gold" />
+              <div className="flex flex-col items-center justify-center gap-5 text-center py-10">
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center"
+                  style={{ background: "rgba(233,189,114,0.18)", color: "var(--wheat)" }}
+                >
+                  <FiSend size={24} />
                 </div>
-                <h3 className="font-display text-2xl text-cream">Message Sent!</h3>
-                <p className="font-body text-cream/60 text-sm max-w-xs">
-                  Thank you for reaching out. Rosemary and the team will be in touch with you shortly.
+                <h3 className="font-display text-2xl font-semibold" style={{ color: "var(--bg-warm)" }}>Message Sent</h3>
+                <p className="font-body text-sm max-w-xs" style={{ color: "rgba(247,246,242,0.55)" }}>
+                  Thank you — we&apos;ll be in touch shortly.
                 </p>
                 <button
-                  onClick={() => setSubmitted(false)}
-                  className="font-sans text-xs text-gold hover:underline mt-2"
+                  onClick={() => { setSubmitted(false); setFormState({ name: "", email: "", organisation: "", service: "", message: "" }); }}
+                  className="font-ui text-[12px] underline"
+                  style={{ color: "var(--wheat)", background: "none", border: 0, cursor: "pointer" }}
                 >
-                  Send another message
+                  Send another →
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <FormField
-                    label="Your Name"
-                    name="name"
-                    type="text"
-                    placeholder="Full name"
-                    value={formState.name}
-                    onChange={handleChange}
-                    required
-                  />
-                  <FormField
-                    label="Email Address"
-                    name="email"
-                    type="email"
-                    placeholder="your@email.com"
-                    value={formState.email}
-                    onChange={handleChange}
-                    required
-                  />
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+                <div className="grid sm:grid-cols-2 gap-3.5">
+                  <FormField label="Name" name="name" type="text" value={formState.name} onChange={handleChange} required />
+                  <FormField label="Email" name="email" type="email" value={formState.email} onChange={handleChange} required />
                 </div>
-                <FormField
-                  label="Organisation"
-                  name="organisation"
-                  type="text"
-                  placeholder="Your organisation or company"
-                  value={formState.organisation}
-                  onChange={handleChange}
-                />
+                <FormField label="Organisation" name="organisation" type="text" value={formState.organisation} onChange={handleChange} />
                 <div>
-                  <label className="block font-mono text-[10px] tracking-widest text-cream/40 uppercase mb-2">
-                    Service Needed
+                  <label className="flex flex-col gap-1.5">
+                    <span className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>
+                      Service
+                    </span>
+                    <select
+                      name="service"
+                      value={formState.service}
+                      onChange={handleChange}
+                      className="font-body text-[14px] rounded-[4px] appearance-none outline-none transition-all duration-200"
+                      style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(247,246,242,0.85)" }}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = "var(--wheat)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)"; }}
+                    >
+                      <option value="" style={{ color: "#171717", background: "#fff" }}>Select a service…</option>
+                      <option value="Rapporteurship & Documentation" style={{ color: "#171717", background: "#fff" }}>Rapporteurship &amp; Documentation</option>
+                      <option value="Facilitation & Moderation" style={{ color: "#171717", background: "#fff" }}>Facilitation &amp; Moderation</option>
+                      <option value="Scriptwriting & Content" style={{ color: "#171717", background: "#fff" }}>Scriptwriting &amp; Content</option>
+                      <option value="Additional Support" style={{ color: "#171717", background: "#fff" }}>Additional Support Services</option>
+                      <option value="General Inquiry" style={{ color: "#171717", background: "#fff" }}>General Inquiry</option>
+                    </select>
                   </label>
-                  <select
-                    name="service"
-                    value={formState.service}
-                    onChange={handleChange}
-                    className="w-full bg-white/[0.05] border border-white/10 rounded-sm px-4 py-3 font-sans text-sm text-cream/70 focus:outline-none focus:border-gold/50 focus:bg-white/[0.08] transition-all duration-300 appearance-none"
-                  >
-                    <option value="" className="text-ink">Select a service...</option>
-                    <option value="Rapporteurship & Documentation" className="text-ink">Rapporteurship &amp; Documentation</option>
-                    <option value="Facilitation & Moderation" className="text-ink">Facilitation &amp; Moderation</option>
-                    <option value="Scriptwriting" className="text-ink">Scriptwriting &amp; Content</option>
-                    <option value="Additional Support" className="text-ink">Additional Support Services</option>
-                    <option value="General Inquiry" className="text-ink">General Inquiry</option>
-                  </select>
                 </div>
                 <div>
-                  <label className="block font-mono text-[10px] tracking-widest text-cream/40 uppercase mb-2">
-                    Your Message
+                  <label className="flex flex-col gap-1.5">
+                    <span className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>
+                      Message
+                    </span>
+                    <textarea
+                      name="message"
+                      value={formState.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      placeholder="Tell us about your event or project…"
+                      className="font-body text-[14px] rounded-[4px] outline-none resize-vertical transition-all duration-200"
+                      style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(247,246,242,0.85)" }}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = "var(--wheat)"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+                    />
                   </label>
-                  <textarea
-                    name="message"
-                    value={formState.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    placeholder="Tell us about your event, project, or documentation needs..."
-                    className="w-full bg-white/[0.05] border border-white/10 rounded-sm px-4 py-3 font-body text-sm text-cream/70 placeholder-cream/20 focus:outline-none focus:border-gold/50 focus:bg-white/[0.08] transition-all duration-300 resize-none"
-                  />
                 </div>
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-3 py-4 bg-gold text-ink font-sans font-semibold text-sm tracking-wide rounded-sm hover:bg-gold-light transition-all duration-300 group"
+                  className="w-full flex items-center justify-center gap-2.5 font-ui font-semibold text-[13.5px] tracking-[0.04em] rounded-[4px] transition-all duration-250"
+                  style={{ padding: "14px 22px", background: "var(--wheat)", color: "var(--navy-deep)", border: 0, cursor: "pointer" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "#F2CE93")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "var(--wheat)")}
                 >
-                  Send Message
-                  <FiSend
-                    size={16}
-                    className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300"
-                  />
+                  Send Message <FiSend size={14} />
                 </button>
               </form>
             )}
@@ -269,36 +255,27 @@ export default function Contact() {
 }
 
 function FormField({
-  label,
-  name,
-  type,
-  placeholder,
-  value,
-  onChange,
-  required,
+  label, name, type, value, onChange, required,
 }: {
-  label: string;
-  name: string;
-  type: string;
-  placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
+  label: string; name: string; type: string; value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; required?: boolean;
 }) {
   return (
-    <div>
-      <label className="block font-mono text-[10px] tracking-widest text-cream/40 uppercase mb-2">
+    <label className="flex flex-col gap-1.5">
+      <span className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>
         {label}
-      </label>
+      </span>
       <input
         type={type}
         name={name}
         value={value}
         onChange={onChange}
         required={required}
-        placeholder={placeholder}
-        className="w-full bg-white/[0.05] border border-white/10 rounded-sm px-4 py-3 font-sans text-sm text-cream/70 placeholder-cream/20 focus:outline-none focus:border-gold/50 focus:bg-white/[0.08] transition-all duration-300"
+        className="font-body text-[14px] rounded-[4px] outline-none transition-all duration-200"
+        style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(247,246,242,0.85)" }}
+        onFocus={(e) => { e.currentTarget.style.borderColor = "var(--wheat)"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
+        onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
       />
-    </div>
+    </label>
   );
 }

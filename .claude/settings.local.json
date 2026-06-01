@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(gunzip -c \"/Users/kachi/.claude/projects/-Users-kachi-Documents-dev-web-rmscribe/68df24cc-5469-47fb-ab79-685230423878/tool-results/webfetch-1778747945666-nerz7l.bin\")",
+      "Read(//private/tmp/**)",
+      "Bash(tar -xzf \"/Users/kachi/.claude/projects/-Users-kachi-Documents-dev-web-rmscribe/68df24cc-5469-47fb-ab79-685230423878/tool-results/webfetch-1778747945666-nerz7l.bin\")",
+      "Bash(npm run *)",
+      "Bash(Read /private/tmp/claude-501/-Users-kachi-Documents-dev-web-rmscribe/68df24cc-5469-47fb-ab79-685230423878/tasks/bmqqhstw3.output)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(pkill -f \"next dev\")"
+    ]
+  }
+}

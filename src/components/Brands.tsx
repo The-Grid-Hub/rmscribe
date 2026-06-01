@@ -14,27 +14,40 @@ export default function Brands() {
   const ref = useReveal<HTMLDivElement>();
 
   return (
-    <section className="bg-parchment py-16 border-y border-gold/10 overflow-hidden">
-      <div ref={ref} className="max-w-7xl mx-auto px-6 lg:px-12">
-        <p className="font-mono text-[10px] tracking-[0.3em] text-gold-muted uppercase text-center mb-10">
+    <section
+      style={{
+        background: "var(--bg-warm)",
+        padding: "64px 0",
+        borderTop: "1px solid rgba(30,63,99,0.06)",
+        borderBottom: "1px solid rgba(30,63,99,0.06)",
+      }}
+    >
+      <div ref={ref} className="max-w-[1280px] mx-auto px-6 lg:px-12 section-reveal">
+        <p
+          className="font-ui font-semibold uppercase text-center mb-8"
+          style={{ fontSize: 10.5, letterSpacing: "0.32em", color: "var(--wheat-dark)" }}
+        >
           Organisations That Trust Us
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-          {brands.map((brand, i) => (
-            <div
+        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
+          {brands.map((brand) => (
+            <span
               key={brand.name}
-              className="group flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-all duration-300"
+              className="font-display font-bold text-[18px] cursor-default transition-all duration-300 whitespace-nowrap"
+              style={{ color: "var(--ink)", opacity: 0.55 }}
               title={brand.full}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "1";
+                e.currentTarget.style.color = "var(--terracotta)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "0.55";
+                e.currentTarget.style.color = "var(--ink)";
+              }}
             >
-              <span className="font-display text-base font-bold text-ink group-hover:text-gold transition-colors duration-300 whitespace-nowrap">
-                {brand.name}
-              </span>
-              <span
-                className="w-0 group-hover:w-full h-px bg-gold transition-all duration-500"
-                style={{ transitionDelay: "0ms" }}
-              />
-            </div>
+              {brand.name}
+            </span>
           ))}
         </div>
       </div>
