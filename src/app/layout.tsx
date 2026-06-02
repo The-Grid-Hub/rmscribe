@@ -15,6 +15,11 @@ export const metadata: Metadata = {
     "RMScribe Consulting",
   ],
   authors: [{ name: "RMScribe Consulting Ltd" }],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/assets/rmscribe-logo-exact-transparent.png",
+  },
   openGraph: {
     title: "RMScribe Consulting Ltd",
     description:
