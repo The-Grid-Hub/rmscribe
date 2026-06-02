@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import RevealObserver from "@/components/RevealObserver";
 
 export const metadata: Metadata = {
   title: "RMScribe Consulting Ltd | Documentation & Conference Services",
@@ -29,7 +30,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <RevealObserver />
+      </body>
     </html>
   );
 }

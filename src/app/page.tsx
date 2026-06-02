@@ -1,9 +1,12 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
 import Brands from "@/components/Brands";
+import About from "@/components/About";
+import Stats from "@/components/Stats";
 import Services from "@/components/Services";
-import Work from "@/components/Work";
+import Gallery from "@/components/Gallery";
+import Projects from "@/components/Projects";
+import Commendations from "@/components/Commendations";
 import CTABanner from "@/components/CTABanner";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -15,8 +18,11 @@ export default function Home() {
       <Hero />
       <Brands />
       <About />
+      <Stats />
       <Services />
-      <Work />
+      <Gallery />
+      <Projects />
+      <Commendations />
       <CTABanner />
       <Contact />
       <Footer />

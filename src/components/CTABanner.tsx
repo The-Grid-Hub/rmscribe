@@ -1,61 +1,68 @@
 "use client";
 
-import { useReveal } from "@/hooks/useReveal";
+import { useEffect, useState } from "react";
 
 export default function CTABanner() {
-  const ref = useReveal<HTMLDivElement>();
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth < 700);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const scrollToContact = () => {
+    const el = document.getElementById("contact");
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 74, behavior: "smooth" });
+  };
 
   return (
-    <section style={{ background: "var(--bg-warm)", padding: "80px 0" }}>
-      <div ref={ref} className="max-w-[1280px] mx-auto px-6 lg:px-12 section-reveal">
+    <section style={{ position: "relative", overflow: "hidden", background: "var(--navy-deep)" }}>
+      {/* Background photo */}
+      <div style={{ position: "absolute", inset: 0 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/eu-sdgn-podium-2.jpg"
+          alt=""
+          aria-hidden="true"
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }}
+        />
         <div
-          className="relative rounded-[4px] overflow-hidden text-center"
-          style={{ background: "var(--navy)", padding: "56px 64px" }}
-        >
-          {/* Diagonal hatch */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              opacity: 0.07,
-              backgroundImage: "repeating-linear-gradient(-45deg, transparent 20px, #E9BD72 20px, #E9BD72 21px)",
-            }}
-          />
-          {/* Corner brackets */}
-          <div className="absolute top-3.5 left-3.5 w-6 h-6 border-t border-l" style={{ borderColor: "rgba(233,189,114,0.4)" }} />
-          <div className="absolute bottom-3.5 right-3.5 w-6 h-6 border-b border-r" style={{ borderColor: "rgba(233,189,114,0.4)" }} />
+          style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(90deg, rgba(13,28,46,0.95) 0%, rgba(13,28,46,0.82) 55%, rgba(13,28,46,0.7) 100%)",
+          }}
+        />
+      </div>
 
-          <div className="relative">
-            <p className="font-ui text-[11px] font-semibold tracking-[0.32em] uppercase mb-[18px]" style={{ color: "var(--wheat)" }}>
-              Ready to Work Together?
-            </p>
-            <h2
-              className="font-display font-semibold leading-[1.15] mb-4"
-              style={{ fontSize: "clamp(1.75rem, 2vw + 1rem, 2.5rem)", color: "var(--bg-warm)" }}
+      <div
+        className="wrap"
+        style={{
+          position: "relative",
+          paddingTop: "clamp(60px,7vw,96px)",
+          paddingBottom: "clamp(60px,7vw,96px)",
+        }}
+      >
+        <div className="reveal" style={{ maxWidth: 640 }}>
+          <span className="kicker on-dark">Ready to Work Together?</span>
+          <h2
+            className="h-sec on-dark"
+            style={{ fontSize: "clamp(1.8rem, 2.4vw + 1rem, 3rem)" }}
+          >
+            Your next event deserves documentation that lasts.
+          </h2>
+          <p className="lede on-dark" style={{ marginTop: 18, maxWidth: 520 }}>
+            Reach out to discuss your conference, retreat, or scriptwriting project. We respond within 24 hours.
+          </p>
+          <div style={{ marginTop: 30 }}>
+            <button
+              onClick={scrollToContact}
+              className="btn btn-wheat"
+              style={mobile ? { width: "100%", justifyContent: "center" } : undefined}
             >
-              Your next event deserves{" "}
-              <em className="italic" style={{ color: "var(--wheat)" }}>documentation that lasts.</em>
-            </h2>
-            <p
-              className="font-body text-base max-w-[540px] mx-auto mb-8 leading-relaxed"
-              style={{ color: "rgba(247,246,242,0.6)" }}
-            >
-              Reach out to discuss your conference, retreat, or scriptwriting project.
-              We respond within 24 hours.
-            </p>
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="inline-flex items-center gap-2.5 font-ui font-semibold text-[13px] tracking-[0.04em] rounded-[4px] transition-all duration-250 group"
-              style={{ background: "var(--wheat)", color: "var(--navy-deep)", padding: "13px 22px" }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "var(--wheat-dark)")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "var(--wheat)")}
-            >
-              Start the Conversation
-              <span className="group-hover:translate-x-[3px] transition-transform duration-250">→</span>
-            </a>
+              Start the Conversation <span className="ar">→</span>
+            </button>
           </div>
         </div>
       </div>

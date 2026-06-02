@@ -1,281 +1,216 @@
 "use client";
 
-import { useState } from "react";
-import { useReveal } from "@/hooks/useReveal";
-import { FiMail, FiPhone, FiMapPin, FiSend } from "react-icons/fi";
+import { useState, useEffect } from "react";
 import { FaLinkedinIn, FaFacebookF, FaWhatsapp } from "react-icons/fa";
 
-const contactInfo = [
-  {
-    icon: <FiMail size={18} />,
-    label: "Email",
-    value: "consultingrmscribe@gmail.com",
-    href: "mailto:consultingrmscribe@gmail.com",
-  },
-  {
-    icon: <FiPhone size={18} />,
-    label: "Phone / WhatsApp",
-    value: "+234 806 222 1464",
-    href: "tel:+2348062221464",
-  },
-  {
-    icon: <FiMapPin size={18} />,
-    label: "Office",
-    value: "20 Rabiatu Aghedo Street, Ago Palace Way, Okota, Lagos",
-    href: undefined,
-  },
+const _ci = { fill: "none", stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+
+const MailIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" {..._ci}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>;
+const PhoneIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" {..._ci}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>;
+const PinIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" {..._ci}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>;
+const SendIcon = ({ big }: { big?: boolean }) => <svg width={big ? 26 : 16} height={big ? 26 : 16} viewBox="0 0 24 24" {..._ci}><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>;
+
+const contactItems = [
+  { Icon: MailIcon, label: "Email", value: "consultingrmscribe@gmail.com", href: "mailto:consultingrmscribe@gmail.com" },
+  { Icon: PhoneIcon, label: "Phone", value: "+234 806 222 1464", href: "tel:+2348062221464" },
+  { Icon: PinIcon, label: "Office", value: "20 Rabiatu Aghedo Street, Ago Palace Way, Okota, Lagos", href: undefined },
 ];
 
 const socials = [
-  { icon: <FaLinkedinIn size={16} />, label: "LinkedIn", href: "https://www.linkedin.com/in/rmscribe-consulting-13031a381", color: "#0A66C2" },
-  { icon: <FaFacebookF size={16} />, label: "Facebook", href: "https://www.facebook.com/rosepirationwrites", color: "#1877F2" },
-  { icon: <FaWhatsapp size={16} />, label: "WhatsApp", href: "https://wa.me/2348062221464", color: "#25D366" },
+  { icon: <FaLinkedinIn size={16} />, label: "LinkedIn", href: "https://www.linkedin.com/in/rmscribe-consulting-13031a381" },
+  { icon: <FaFacebookF size={16} />, label: "Facebook", href: "https://www.facebook.com/rosepirationwrites" },
+  { icon: <FaWhatsapp size={18} />, label: "WhatsApp", href: "https://wa.me/2348062221464" },
 ];
 
-export default function Contact() {
-  const headerRef = useReveal<HTMLDivElement>();
-  const [formState, setFormState] = useState({ name: "", email: "", organisation: "", service: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+const fieldStyle = (foc: boolean): React.CSSProperties => ({
+  fontFamily: "var(--font-body)", fontSize: 15, padding: "12px 14px", borderRadius: 3,
+  width: "100%", background: "#fff",
+  border: "1px solid " + (foc ? "var(--terracotta)" : "var(--hairline)"),
+  color: "var(--ink)", outline: "none", resize: "vertical", transition: "border-color .2s",
+});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+function LField({ label, rows, type = "text", value, onChange }: {
+  label: string; rows?: number; type?: string; value: string; onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}) {
+  const [foc, setFoc] = useState(false);
+  return (
+    <label style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+      <span style={{ fontFamily: "var(--font-ui)", fontSize: 10.5, fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink-4)" }}>{label}</span>
+      {rows ? (
+        <textarea
+          rows={rows}
+          value={value}
+          onChange={onChange as (e: React.ChangeEvent<HTMLTextAreaElement>) => void}
+          onFocus={() => setFoc(true)}
+          onBlur={() => setFoc(false)}
+          style={fieldStyle(foc)}
+        />
+      ) : (
+        <input
+          type={type}
+          value={value}
+          onChange={onChange as (e: React.ChangeEvent<HTMLInputElement>) => void}
+          onFocus={() => setFoc(true)}
+          onBlur={() => setFoc(false)}
+          style={fieldStyle(foc)}
+        />
+      )}
+    </label>
+  );
+}
+
+function LSelect({ label, value, onChange, options }: { label: string; value: string; onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void; options: string[] }) {
+  return (
+    <label style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+      <span style={{ fontFamily: "var(--font-ui)", fontSize: 10.5, fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink-4)" }}>{label}</span>
+      <select
+        value={value}
+        onChange={onChange}
+        style={{ fontFamily: "var(--font-body)", fontSize: 15, padding: "12px 14px", borderRadius: 3, width: "100%", background: "#fff", border: "1px solid var(--hairline)", color: "var(--ink)", outline: "none" }}
+      >
+        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </label>
+  );
+}
+
+export default function Contact() {
+  const [narrow, setNarrow] = useState(false);
+  const [mobile, setMobile] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", org: "", service: "Rapporteurship & Documentation", message: "" });
+  const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    const check = () => { setNarrow(window.innerWidth < 1024); setMobile(window.innerWidth < 700); };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const on = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Enquiry from ${formState.name} - ${formState.service || "General"}`);
-    const body = encodeURIComponent(
-      `Name: ${formState.name}\nEmail: ${formState.email}\nOrganisation: ${formState.organisation}\nService: ${formState.service}\n\nMessage:\n${formState.message}`
-    );
+    const subject = encodeURIComponent(`Enquiry from ${form.name} - ${form.service}`);
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\nOrganisation: ${form.org}\nService: ${form.service}\n\nMessage:\n${form.message}`);
     window.location.href = `mailto:consultingrmscribe@gmail.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    setSent(true);
   };
 
   return (
-    <section id="contact" className="relative overflow-hidden" style={{ background: "var(--navy-deep)", padding: "112px 0" }}>
-      {/* Radial glow bottom-left */}
-      <div
-        className="absolute bottom-0 left-0 pointer-events-none"
-        style={{ width: 600, height: 600, background: "radial-gradient(circle, rgba(233,189,114,0.10), transparent 60%)" }}
-      />
-
-      <div className="relative max-w-[1280px] mx-auto px-6 lg:px-12">
-        {/* Header */}
-        <div ref={headerRef} className="mb-14 section-reveal">
-          <div className="flex items-center gap-3.5 mb-[18px]">
-            <span className="inline-block w-10 h-px" style={{ background: "var(--wheat)" }} />
-            <span className="font-ui text-[11px] font-semibold tracking-[0.28em] uppercase" style={{ color: "var(--wheat)" }}>
-              Get in Touch
-            </span>
-          </div>
-          <h2
-            className="font-display font-semibold leading-[1.1] max-w-[800px]"
-            style={{ fontSize: "clamp(2rem, 3vw + 1rem, 3.5rem)", color: "var(--bg-warm)" }}
-          >
-            Let&apos;s Build Something{" "}
-            <em className="italic" style={{ color: "var(--terracotta)" }}>Remarkable</em> Together
-          </h2>
+    <section id="contact" className="sec" style={{ background: "#fff" }}>
+      <div className="wrap">
+        <div className="reveal">
+          <span className="kicker">Get in Touch</span>
+          <h2 className="h-sec" style={{ marginBottom: 18 }}>Let&apos;s build something remarkable</h2>
+          <p className="lede" style={{ maxWidth: 620 }}>
+            Tell us about an upcoming conference, a documentation project, or simply introduce your organisation. We typically respond within 24 hours.
+          </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr,1.4fr] gap-16 items-start">
-          {/* Contact info */}
-          <div>
-            <p className="font-body text-base leading-[1.7] mb-8" style={{ color: "rgba(247,246,242,0.6)" }}>
-              Reach out about an upcoming conference, a documentation project, or just to introduce your
-              organisation. We typically respond within 24 hours.
-            </p>
-
-            <div className="flex flex-col gap-[18px] mb-8">
-              {contactInfo.map((item) => {
+        <div
+          style={{
+            marginTop: narrow ? 36 : 56,
+            display: "grid",
+            gridTemplateColumns: narrow ? "1fr" : "0.85fr 1.15fr",
+            gap: narrow ? 36 : "clamp(40px,5vw,72px)",
+            alignItems: "start",
+          }}
+        >
+          {/* Info */}
+          <div className="reveal">
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              {contactItems.map(({ Icon, label, value, href }) => {
                 const inner = (
                   <>
-                    <span
-                      className="w-10 h-10 flex items-center justify-center rounded-[4px] shrink-0"
-                      style={{ border: "1px solid rgba(255,255,255,0.12)", color: "var(--wheat)" }}
-                    >
-                      {item.icon}
+                    <span style={{ width: 44, height: 44, flex: "0 0 44px", borderRadius: 4, border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--terracotta)" }}>
+                      <Icon />
                     </span>
-                    <span className="flex flex-col gap-0.5">
-                      <span className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "rgba(255,255,255,0.4)" }}>
-                        {item.label}
-                      </span>
-                      <span className="font-body text-[14.5px]" style={{ color: "rgba(247,246,242,0.85)" }}>
-                        {item.value}
-                      </span>
+                    <span style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                      <span style={{ fontFamily: "var(--font-ui)", fontSize: 10.5, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink-4)" }}>{label}</span>
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--ink-2)" }}>{value}</span>
                     </span>
                   </>
                 );
-                return item.href ? (
-                  <a key={item.label} href={item.href} className="flex items-center gap-3.5 no-underline">
-                    {inner}
-                  </a>
+                return href ? (
+                  <a key={label} href={href} style={{ display: "flex", gap: 14, alignItems: "center", textDecoration: "none", borderBottom: 0, padding: "14px 0" }}>{inner}</a>
                 ) : (
-                  <div key={item.label} className="flex items-center gap-3.5">
-                    {inner}
-                  </div>
+                  <div key={label} style={{ display: "flex", gap: 14, alignItems: "center", padding: "14px 0" }}>{inner}</div>
                 );
               })}
             </div>
-
-            {/* Socials */}
-            <div className="mb-8">
-              <p className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase mb-4" style={{ color: "rgba(255,255,255,0.4)" }}>
-                Connect With Us
-              </p>
-              <div className="flex gap-3">
-                {socials.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    className="w-10 h-10 rounded-[4px] flex items-center justify-center transition-all duration-300"
-                    style={{ border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.5)" }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = s.color;
-                      e.currentTarget.style.borderColor = s.color;
-                      e.currentTarget.style.color = "#fff";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
-                      e.currentTarget.style.color = "rgba(255,255,255,0.5)";
-                    }}
-                  >
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Founder card */}
-            <div
-              className="rounded-[4px] p-5"
-              style={{ border: "1px solid rgba(233,189,114,0.18)", background: "rgba(255,255,255,0.03)" }}
-            >
-              <p className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase mb-1.5" style={{ color: "rgba(255,255,255,0.45)" }}>
-                Lead Consultant
-              </p>
-              <p className="font-display text-[22px] font-semibold" style={{ color: "var(--bg-warm)" }}>Rosemary Alor</p>
-              <p className="font-ui text-[12px] mt-1" style={{ color: "rgba(255,255,255,0.45)" }}>Founder · Lead Rapporteur</p>
+            <div style={{ display: "flex", gap: 10, marginTop: 18 }}>
+              {socials.map((s) => (
+                <a
+                  key={s.href}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  style={{
+                    width: 40, height: 40,
+                    borderRadius: 4, border: "1px solid var(--hairline)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    textDecoration: "none", color: "var(--ink-2)", transition: "all .2s",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--terracotta)"; e.currentTarget.style.color = "var(--terracotta)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--hairline)"; e.currentTarget.style.color = "var(--ink-2)"; }}
+                >
+                  {s.icon}
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Form */}
-          <div
-            className="rounded-[4px]"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", padding: 36 }}
-          >
-            {submitted ? (
-              <div className="flex flex-col items-center justify-center gap-5 text-center py-10">
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center"
-                  style={{ background: "rgba(233,189,114,0.18)", color: "var(--wheat)" }}
-                >
-                  <FiSend size={24} />
+          <div className="reveal" style={{ transitionDelay: "90ms" }}>
+            <div style={{ background: "var(--bg-warm)", border: "1px solid var(--hairline)", borderRadius: 4, padding: mobile ? 22 : 36 }}>
+              {sent ? (
+                <div style={{ textAlign: "center", padding: "36px 16px" }}>
+                  <div style={{ width: 60, height: 60, margin: "0 auto 18px", borderRadius: "50%", background: "var(--terracotta-soft)", color: "var(--terracotta)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <SendIcon big />
+                  </div>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 700, color: "var(--ink)", margin: "0 0 8px" }}>Message sent</h3>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--ink-3)", margin: "0 0 16px" }}>Thank you — we&apos;ll be in touch shortly.</p>
+                  <button
+                    onClick={() => { setSent(false); setForm({ name: "", email: "", org: "", service: "Rapporteurship & Documentation", message: "" }); }}
+                    style={{ background: "none", border: 0, fontFamily: "var(--font-ui)", fontSize: 13, color: "var(--terracotta)", cursor: "pointer", textDecoration: "underline" }}
+                  >
+                    Send another
+                  </button>
                 </div>
-                <h3 className="font-display text-2xl font-semibold" style={{ color: "var(--bg-warm)" }}>Message Sent</h3>
-                <p className="font-body text-sm max-w-xs" style={{ color: "rgba(247,246,242,0.55)" }}>
-                  Thank you — we&apos;ll be in touch shortly.
-                </p>
-                <button
-                  onClick={() => { setSubmitted(false); setFormState({ name: "", email: "", organisation: "", service: "", message: "" }); }}
-                  className="font-ui text-[12px] underline"
-                  style={{ color: "var(--wheat)", background: "none", border: 0, cursor: "pointer" }}
-                >
-                  Send another →
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
-                <div className="grid sm:grid-cols-2 gap-3.5">
-                  <FormField label="Name" name="name" type="text" value={formState.name} onChange={handleChange} required />
-                  <FormField label="Email" name="email" type="email" value={formState.email} onChange={handleChange} required />
-                </div>
-                <FormField label="Organisation" name="organisation" type="text" value={formState.organisation} onChange={handleChange} />
-                <div>
-                  <label className="flex flex-col gap-1.5">
-                    <span className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>
-                      Service
-                    </span>
-                    <select
-                      name="service"
-                      value={formState.service}
-                      onChange={handleChange}
-                      className="font-body text-[14px] rounded-[4px] appearance-none outline-none transition-all duration-200"
-                      style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(247,246,242,0.85)" }}
-                      onFocus={(e) => { e.currentTarget.style.borderColor = "var(--wheat)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)"; }}
-                    >
-                      <option value="" style={{ color: "#171717", background: "#fff" }}>Select a service…</option>
-                      <option value="Rapporteurship & Documentation" style={{ color: "#171717", background: "#fff" }}>Rapporteurship &amp; Documentation</option>
-                      <option value="Facilitation & Moderation" style={{ color: "#171717", background: "#fff" }}>Facilitation &amp; Moderation</option>
-                      <option value="Scriptwriting & Content" style={{ color: "#171717", background: "#fff" }}>Scriptwriting &amp; Content</option>
-                      <option value="Additional Support" style={{ color: "#171717", background: "#fff" }}>Additional Support Services</option>
-                      <option value="General Inquiry" style={{ color: "#171717", background: "#fff" }}>General Inquiry</option>
-                    </select>
-                  </label>
-                </div>
-                <div>
-                  <label className="flex flex-col gap-1.5">
-                    <span className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>
-                      Message
-                    </span>
-                    <textarea
-                      name="message"
-                      value={formState.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      placeholder="Tell us about your event or project…"
-                      className="font-body text-[14px] rounded-[4px] outline-none resize-vertical transition-all duration-200"
-                      style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(247,246,242,0.85)" }}
-                      onFocus={(e) => { e.currentTarget.style.borderColor = "var(--wheat)"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+              ) : (
+                <form onSubmit={handleSubmit}>
+                  <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "1fr 1fr", gap: 16, marginBottom: 16 }}>
+                    <LField label="Name" value={form.name} onChange={on("name")} />
+                    <LField label="Email" type="email" value={form.email} onChange={on("email")} />
+                  </div>
+                  <div style={{ marginBottom: 16 }}><LField label="Organisation" value={form.org} onChange={on("org")} /></div>
+                  <div style={{ marginBottom: 16 }}>
+                    <LSelect
+                      label="Service of interest"
+                      value={form.service}
+                      onChange={on("service") as (e: React.ChangeEvent<HTMLSelectElement>) => void}
+                      options={["Rapporteurship & Documentation", "Facilitation & Moderation", "Scriptwriting & Content", "Knowledge Management & Support", "General Inquiry"]}
                     />
-                  </label>
-                </div>
-                <button
-                  type="submit"
-                  className="w-full flex items-center justify-center gap-2.5 font-ui font-semibold text-[13.5px] tracking-[0.04em] rounded-[4px] transition-all duration-250"
-                  style={{ padding: "14px 22px", background: "var(--wheat)", color: "var(--navy-deep)", border: 0, cursor: "pointer" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "#F2CE93")}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "var(--wheat)")}
-                >
-                  Send Message <FiSend size={14} />
-                </button>
-              </form>
-            )}
+                  </div>
+                  <div style={{ marginBottom: 22 }}>
+                    <LField label="Message" rows={5} value={form.message} onChange={on("message")} />
+                  </div>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{ width: "100%", justifyContent: "center" }}
+                  >
+                    Send Message <SendIcon />
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function FormField({
-  label, name, type, value, onChange, required,
-}: {
-  label: string; name: string; type: string; value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; required?: boolean;
-}) {
-  return (
-    <label className="flex flex-col gap-1.5">
-      <span className="font-ui text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>
-        {label}
-      </span>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        className="font-body text-[14px] rounded-[4px] outline-none transition-all duration-200"
-        style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(247,246,242,0.85)" }}
-        onFocus={(e) => { e.currentTarget.style.borderColor = "var(--wheat)"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
-        onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
-      />
-    </label>
   );
 }

@@ -1,168 +1,98 @@
 "use client";
 
 import { useState } from "react";
-import { useReveal } from "@/hooks/useReveal";
-import {
-  FiFileText,
-  FiMic,
-  FiEdit3,
-  FiList,
-  FiCheckCircle,
-} from "react-icons/fi";
 
-const services = [
+const _s = { fill: "none", stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+
+const FileTextIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" {..._s}>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" /><line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="14" y2="17" />
+  </svg>
+);
+const MicIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" {..._s}>
+    <rect x="9" y="2" width="6" height="12" rx="3" />
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="22" />
+  </svg>
+);
+const EditIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" {..._s}>
+    <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+  </svg>
+);
+const ListIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" {..._s}>
+    <line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" /><line x1="8" y1="18" x2="21" y2="18" />
+    <circle cx="4" cy="6" r="1" fill="currentColor" stroke="none" />
+    <circle cx="4" cy="12" r="1" fill="currentColor" stroke="none" />
+    <circle cx="4" cy="18" r="1" fill="currentColor" stroke="none" />
+  </svg>
+);
+
+const SERVICES = [
   {
-    icon: <FiFileText size={22} />,
-    number: "01",
-    title: "Rapporteurship & Documentation",
-    tagline: "Precision in Every Word",
-    items: [
-      "Real-time session documentation",
-      "Plenary, panel, and breakout coverage",
-      "Structured session summaries and final reports",
-      "Donor-ready report writing and formatting",
-    ],
-    accent: "#C65D50",
+    title: "Rapporteurship & Documentation", tagline: "Precision in every word", Icon: FileTextIcon,
+    items: ["Real-time session documentation", "Plenary, panel & breakout coverage", "Structured summaries & final reports", "Donor-ready report writing & formatting"],
   },
   {
-    icon: <FiMic size={22} />,
-    number: "02",
-    title: "Facilitation & Moderation",
-    tagline: "Guiding Meaningful Dialogue",
-    items: [
-      "Conference and workshop facilitation",
-      "Panel moderation and audience engagement",
-      "Agenda structuring and session management",
-      "Synthesis and recommendations capture",
-    ],
-    accent: "#1E3F63",
+    title: "Facilitation & Moderation", tagline: "Guiding meaningful dialogue", Icon: MicIcon,
+    items: ["Conference & workshop facilitation", "Panel moderation & audience engagement", "Agenda structuring & session management", "Synthesis & recommendations capture"],
   },
   {
-    icon: <FiEdit3 size={22} />,
-    number: "03",
-    title: "Scriptwriting & Content",
-    tagline: "Stories That Resonate",
-    items: [
-      "Scriptwriting for radio, film, and digital media",
-      "Ghostwriting and narrative development",
-      "Content editing, proofreading, and formatting",
-      "Communication strategy support",
-    ],
-    accent: "#C99A4D",
+    title: "Scriptwriting & Content", tagline: "Stories that resonate", Icon: EditIcon,
+    items: ["Scriptwriting for radio, film & digital", "Ghostwriting & narrative development", "Editing, proofreading & formatting", "Communication strategy support"],
   },
   {
-    icon: <FiList size={22} />,
-    number: "04",
-    title: "Additional Support Services",
-    tagline: "End-to-End Knowledge Management",
-    items: [
-      "Audio/video transcription",
-      "Post-event knowledge management",
-      "Stakeholder report packaging",
-      "Programme learning documentation",
-    ],
-    accent: "#5A4A7A",
+    title: "Knowledge Management & Support", tagline: "End-to-end documentation", Icon: ListIcon,
+    items: ["Audio / video transcription", "Post-event knowledge management", "Stakeholder report packaging", "Programme learning documentation"],
   },
 ];
 
-export default function Services() {
-  const headerRef = useReveal<HTMLDivElement>();
-
-  return (
-    <section id="services" className="relative overflow-hidden" style={{ background: "var(--bg-warm)", padding: "112px 0" }}>
-      <div className="gradient-hairline" />
-
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-12" style={{ paddingTop: 64 }}>
-        {/* Header */}
-        <div ref={headerRef} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 section-reveal">
-          <div>
-            <div className="eyebrow">
-              <span className="font-ui text-[11px] font-semibold tracking-[0.28em] uppercase" style={{ color: "var(--ink-4)" }}>
-                What We Do
-              </span>
-            </div>
-            <h2
-              className="font-display font-semibold leading-[1.1]"
-              style={{ fontSize: "clamp(2rem, 2vw + 1rem, 3rem)", color: "var(--ink)" }}
-            >
-              Services We <em className="italic" style={{ color: "var(--terracotta)" }}>Offer</em>
-            </h2>
-          </div>
-          <p className="font-body text-[15px] leading-relaxed max-w-[340px]" style={{ color: "var(--ink-3)" }}>
-            Comprehensive documentation and conference support tailored to your organisation&apos;s needs.
-          </p>
-        </div>
-
-        {/* Services grid */}
-        <div className="grid md:grid-cols-2 gap-[18px]">
-          {services.map((service, i) => (
-            <ServiceCard key={service.number} service={service} index={i} />
-          ))}
-        </div>
-
-        <WhyChooseUs />
-      </div>
-    </section>
-  );
-}
-
-function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
-  const ref = useReveal<HTMLDivElement>();
+function ServiceCard({ Icon, title, tagline, items }: typeof SERVICES[0]) {
   const [hov, setHov] = useState(false);
-
   return (
     <div
-      ref={ref}
-      className="relative rounded-[4px] overflow-hidden section-reveal"
-      style={{
-        background: "var(--bg)",
-        border: "1px solid rgba(30,63,99,0.08)",
-        padding: "32px 32px 28px",
-        transitionDelay: `${index * 80}ms`,
-        transform: hov ? "translateY(-4px)" : undefined,
-        boxShadow: hov
-          ? "0 20px 60px rgba(23,23,23,0.08)"
-          : "0 1px 2px rgba(23,23,23,0.04), 0 8px 24px rgba(23,23,23,0.06)",
-        transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease",
-      }}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
+      style={{
+        background: "#fff", borderRadius: 4, padding: "clamp(26px,3vw,36px)", height: "100%",
+        border: "1px solid " + (hov ? "rgba(198,93,80,0.4)" : "var(--hairline)"),
+        boxShadow: hov ? "var(--shadow-card)" : "none",
+        transform: hov ? "translateY(-3px)" : "none",
+        transition: "transform .3s var(--ease-out), box-shadow .3s, border-color .3s",
+      }}
     >
-      {/* Accent radial */}
-      <div
-        className="absolute top-0 right-0 w-[120px] h-[120px] pointer-events-none transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(circle at top right, ${service.accent}, transparent 70%)`,
-          opacity: hov ? 0.18 : 0.10,
-        }}
-      />
-
-      <div className="flex items-start justify-between mb-6">
-        <div
-          className="w-12 h-12 flex items-center justify-center rounded-[4px] transition-transform duration-300"
+      <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 18 }}>
+        <span
           style={{
-            background: `${service.accent}20`,
-            color: service.accent,
-            transform: hov ? "scale(1.08)" : "scale(1)",
+            width: 52, height: 52, flex: "0 0 52px", borderRadius: 4,
+            background: "var(--terracotta-soft)", color: "var(--terracotta)",
+            display: "flex", alignItems: "center", justifyContent: "center",
           }}
         >
-          {service.icon}
+          <Icon />
+        </span>
+        <div>
+          <h3
+            style={{
+              fontFamily: "var(--font-display)", fontSize: "clamp(1.2rem, 1vw + 0.8rem, 1.5rem)",
+              fontWeight: 700, color: "var(--ink)", margin: 0, lineHeight: 1.2,
+            }}
+          >
+            {title}
+          </h3>
+          <div style={{ fontFamily: "var(--font-ui)", fontSize: 12.5, fontWeight: 500, color: "var(--ink-4)", marginTop: 4 }}>{tagline}</div>
         </div>
-        <span className="font-mono text-[12px] font-bold" style={{ color: "var(--ink-5)" }}>{service.number}</span>
       </div>
-
-      <p className="font-ui text-[10px] tracking-[0.22em] uppercase font-semibold mb-1.5" style={{ color: "var(--wheat-dark)" }}>
-        {service.tagline}
-      </p>
-      <h3 className="font-display text-[22px] font-semibold leading-[1.2] mb-[18px]" style={{ color: "var(--ink)" }}>
-        {service.title}
-      </h3>
-
-      <ul className="space-y-[9px]">
-        {service.items.map((item) => (
-          <li key={item} className="flex items-start gap-2.5">
-            <FiCheckCircle size={14} className="mt-[4px] shrink-0" style={{ color: service.accent }} />
-            <span className="font-body text-[14px] leading-[1.55]" style={{ color: "var(--ink-3)" }}>{item}</span>
+      <div style={{ height: 1, background: "var(--hairline)", margin: "0 0 18px" }} />
+      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+        {items.map((it) => (
+          <li key={it} style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 10 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--terracotta)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "0 0 16px", marginTop: 3 }}>
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: 14.5, color: "var(--ink-3)", lineHeight: 1.55 }}>{it}</span>
           </li>
         ))}
       </ul>
@@ -170,53 +100,31 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
   );
 }
 
-function WhyChooseUs() {
-  const ref = useReveal<HTMLDivElement>();
-
-  const reasons = [
-    "Proven experience with EU-SDGN (Feb 2025; Jan 2026)",
-    "Trained rapporteurs for multi-stakeholder, multi-day events",
-    "Strong command of Nigerian & international protocols",
-    "C2-level English across all team members",
-    "Handle 200+ attendee events with structured coverage",
-    "Strict confidentiality and time-sensitive delivery",
-    "In-house coordination between rapporteurs and facilitators",
-  ];
-
+export default function Services() {
   return (
-    <div
-      ref={ref}
-      className="mt-16 rounded-[4px] relative overflow-hidden section-reveal"
-      style={{ background: "var(--navy-deep)", padding: "40px 44px" }}
-    >
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          opacity: 0.5,
-          background: "radial-gradient(ellipse at 15% 50%, rgba(233,189,114,0.15), transparent 60%)",
-        }}
-      />
-      <div className="relative">
-        <div className="flex items-center gap-3.5 mb-7">
-          <span className="inline-block w-10 h-px" style={{ background: "var(--wheat)" }} />
-          <span className="font-ui text-[11px] font-semibold tracking-[0.28em] uppercase" style={{ color: "var(--wheat)" }}>
-            Why Choose RMScribe
-          </span>
+    <section id="services" className="sec" style={{ background: "var(--bg-warm)" }}>
+      <div className="wrap">
+        <div className="reveal">
+          <span className="kicker">What We Do</span>
+          <h2 className="h-sec" style={{ marginBottom: 18 }}>Services we offer</h2>
+          <p className="lede" style={{ maxWidth: 620 }}>
+            Comprehensive documentation and conference support, tailored to the standards international organisations and donors expect.
+          </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {reasons.map((reason, i) => (
-            <div key={i} className="flex items-start gap-2.5">
-              <span
-                className="shrink-0 rounded-full mt-2"
-                style={{ width: 6, height: 6, background: "var(--wheat)", flex: "0 0 6px" }}
-              />
-              <span className="font-body text-[13.5px] leading-[1.55]" style={{ color: "rgba(247,246,242,0.65)" }}>
-                {reason}
-              </span>
+        <div
+          style={{
+            marginTop: 56, display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 440px), 1fr))",
+            gap: 20,
+          }}
+        >
+          {SERVICES.map((s, i) => (
+            <div key={s.title} className="reveal" style={{ transitionDelay: `${(i % 2) * 90}ms` }}>
+              <ServiceCard {...s} />
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
