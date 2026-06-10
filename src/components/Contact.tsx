@@ -172,7 +172,7 @@ export default function Contact() {
                     <SendIcon big />
                   </div>
                   <h3 style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 700, color: "var(--ink)", margin: "0 0 8px" }}>Message sent</h3>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--ink-3)", margin: "0 0 16px" }}>Thank you — we&apos;ll be in touch shortly.</p>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--ink-3)", margin: "0 0 16px" }}>Thank you. We&apos;ll be in touch shortly.</p>
                   <button
                     onClick={() => { setSent(false); setForm({ name: "", email: "", org: "", service: "Rapporteurship & Documentation", message: "" }); }}
                     style={{ background: "none", border: 0, fontFamily: "var(--font-ui)", fontSize: 13, color: "var(--terracotta)", cursor: "pointer", textDecoration: "underline" }}

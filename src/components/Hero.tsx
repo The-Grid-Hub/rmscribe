@@ -68,7 +68,7 @@ export default function Hero() {
               color: "rgba(247,246,242,0.82)", maxWidth: 600,
             }}
           >
-            RMScribe Consulting is a Nigerian rapporteurship, facilitation, and knowledge-management firm —
+            RMScribe Consulting is a Nigerian rapporteurship, facilitation, and knowledge-management firm,
             trusted by international organisations and civil society to turn complex conferences into precise,
             donor-ready records.
           </p>

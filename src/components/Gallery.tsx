@@ -2,13 +2,20 @@
 
 import { useState, useEffect } from "react";
 
-const GALLERY = [
-  { src: "/images/conference-notes.jpg", kicker: "Rapporteurship", title: "Real-time documentation", caption: "Our rapporteurs capture discussions as they happen — accurate, structured notes that become the official record." },
+type GalleryItem = {
+  src: string;
+  kicker: string;
+  title: string;
+  caption: string;
+};
+
+const GALLERY: GalleryItem[] = [
+  { src: "/images/prof-jega.png", kicker: "Rapporteurship", title: "Real-time documentation", caption: "Our rapporteurs capture discussions as they happen: accurate, structured notes that become the official record." },
   { src: "/images/eu-sdgn-podium-1.jpg", kicker: "Facilitation", title: "Facilitation & moderation", caption: "We structure agendas, steer panels, and draw out the recommendations that matter most." },
-  { src: "/images/round-table.jpg", kicker: "Breakout coverage", title: "Small-group sessions", caption: "Breakouts are where decisions take shape. We sit in, capture the dialogue, and synthesise clear action points." },
+  { src: "/images/rmscribe-pics.jpeg", kicker: "Breakout coverage", title: "Small-group sessions", caption: "Breakouts are where decisions take shape. We sit in, capture the dialogue, and synthesise clear action points." },
   { src: "/images/eu-sdgn-room.jpg", kicker: "Plenary sessions", title: "Full session coverage", caption: "From keynote to technical session, we follow the agenda end to end so nothing of substance is lost." },
   { src: "/images/eu-sdgn-group.jpg", kicker: "Multi-stakeholder", title: "High-level programmes", caption: "Trusted on flagship engagements bringing together government, CSOs, and development partners." },
-  { src: "/images/rosemary-portrait.jpg", kicker: "Knowledge management", title: "Donor-ready reports", caption: "We package proceedings into comprehensive reports used for reference, learning, and decision-making." },
+  { src: "/images/meeting-table.jpg", kicker: "Knowledge management", title: "Donor-ready reports", caption: "We package proceedings into comprehensive reports used for reference, learning, and decision-making." },
 ];
 
 function LbBtn({ onClick, dir }: { onClick: () => void; dir: "prev" | "next" }) {
@@ -62,7 +69,7 @@ export default function Gallery() {
     };
     window.addEventListener("keydown", onKey);
     return () => { window.removeEventListener("keydown", onKey); document.body.classList.remove("no-scroll"); };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
   return (
@@ -72,7 +79,7 @@ export default function Gallery() {
           <span className="kicker">In the Field</span>
           <h2 className="h-sec" style={{ marginBottom: 18 }}>Our work, in pictures</h2>
           <p className="lede" style={{ maxWidth: 620 }}>
-            A look inside the conferences, retreats, and dialogues we document — and the craft that turns a room full of voices into a precise, lasting record.
+            A look inside the conferences, retreats, and dialogues we document, and the craft that turns a room full of voices into a precise, lasting record.
           </p>
         </div>
 
@@ -92,7 +99,7 @@ export default function Gallery() {
                 style={{ borderRadius: 4, aspectRatio: "4 / 3.2" }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={g.src} alt={g.title} />
+                <img className="tile-img" src={g.src} alt={g.title} />
                 <span className="tile-cap">
                   <span style={{ fontFamily: "var(--font-ui)", fontSize: 10.5, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--wheat)", marginBottom: 7, display: "block" }}>{g.kicker}</span>
                   <span style={{ fontFamily: "var(--font-display)", fontSize: 19, fontWeight: 600, color: "var(--bg-warm)", lineHeight: 1.25 }}>{g.title}</span>
@@ -135,7 +142,13 @@ export default function Gallery() {
             <img
               src={GALLERY[active].src}
               alt={GALLERY[active].title}
-              style={{ width: "100%", maxHeight: mobile ? "58vh" : "72vh", objectFit: "contain", borderRadius: 4 }}
+              style={{
+                width: "100%",
+                maxHeight: mobile ? "58vh" : "72vh",
+                objectFit: "contain",
+                borderRadius: 4,
+                margin: "0 auto",
+              }}
             />
             <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 24, marginTop: 20, flexWrap: "wrap" }}>
               <div style={{ maxWidth: 640 }}>

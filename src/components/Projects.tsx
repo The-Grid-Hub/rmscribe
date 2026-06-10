@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 const PROJECTS = [
   {
     category: "Rapporteur Services", client: "EU-SDGN", title: "EU-SDGN 5-Day Programme Retreat", year: "2025 & 2026",
-    description: "We served as rapporteur service provider for the 5-day EU-SDGN retreat in Lagos — twice — documenting plenary sessions, technical presentations, panel discussions, and breakout groups with neutral, structured reporting.",
+    description: "We served as rapporteur service provider for the 5-day EU-SDGN retreat in Lagos, twice, documenting plenary sessions, technical presentations, panel discussions, and breakout groups with neutral, structured reporting.",
     outcome: "Highly commended by stakeholders. Report used for future reference and decision-making.",
   },
   {
@@ -25,7 +25,7 @@ const PROJECTS = [
   },
   {
     category: "Rapporteur Services", client: "PIND Foundation", title: "Programme Documentation Support", year: "Multi-year",
-    description: "Rapporteur and documentation support across programme meetings, community dialogues, and stakeholder sessions — real-time notes, summaries, and structured action-point reports.",
+    description: "Rapporteur and documentation support across programme meetings, community dialogues, and stakeholder sessions: real-time notes, summaries, and structured action-point reports.",
     outcome: "Reports supported decision-making, programme learning, and donor communication.",
   },
 ];
@@ -49,7 +49,7 @@ export default function Projects() {
           <span className="kicker">Selected Projects</span>
           <h2 className="h-sec" style={{ marginBottom: 18 }}>A record of trusted work</h2>
           <p className="lede" style={{ maxWidth: 620 }}>
-            Engagements across documentation, facilitation, and creative writing — for government programmes, donors, and civil-society partners.
+            Engagements across documentation, facilitation, and creative writing, for government programmes, donors, and civil-society partners.
           </p>
         </div>
 

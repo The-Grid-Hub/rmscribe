@@ -117,7 +117,7 @@ export default function About() {
                   fontSize: "clamp(19px, 1.6vw + 0.6rem, 26px)", lineHeight: 1.5, color: "var(--ink)",
                 }}
               >
-                Storytelling is my passion. Every meeting has a story worth capturing precisely — and I bring the
+                Storytelling is my passion. Every meeting has a story worth capturing precisely, and I bring the
                 same care to documenting your event that I bring to crafting a compelling narrative.
               </blockquote>
               <figcaption style={{ marginTop: 24, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>

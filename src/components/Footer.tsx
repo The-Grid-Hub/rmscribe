@@ -56,7 +56,7 @@ export default function Footer() {
               </span>
             </div>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 14.5, lineHeight: 1.65, color: "rgba(247,246,242,0.55)", maxWidth: 300, margin: 0 }}>
-              We help you capture the heart of your meetings and events — precise, donor-ready documentation for conferences across Nigeria and beyond.
+              We help you capture the heart of your meetings and events: precise, donor-ready documentation for conferences across Nigeria and beyond.
             </p>
           </div>
 
